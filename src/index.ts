@@ -1,7 +1,7 @@
 
 
 import { parse, ReflectionObject, Root } from 'protobufjs'
-import * as JSON5 from 'json5'
+import JSON5 from 'json5'
 
 export enum BODY_OPTION {
   FORM_DATA = 'FORM_DATA',
