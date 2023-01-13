@@ -1,6 +1,6 @@
 {
   "name": "rap-import-utils",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "utils for rap import",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -9,7 +9,11 @@
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "prepublishOnly": "npm run build"
   },
-  "keywords": ["rap", "YAPI", "protobuf"],
+  "keywords": [
+    "rap",
+    "YAPI",
+    "protobuf"
+  ],
   "authors": [],
   "license": "MIT",
   "files": [
