@@ -192,6 +192,10 @@ function getYapiType(type: string) {
   if (type === 'text' || type === 'file' || !type) {
     return 'String'
   }
+  // when type is array and not define items type, the type value is ['array', 'null']
+  if(Array.isArray(type)) {
+    return 'Array'
+  }
   return type === 'integer' ? 'Number' : type.substring(0, 1).toUpperCase() + type.substring(1)
 }
 function getYapiMock(el) {
