@@ -2,6 +2,7 @@
 
 import { parse, ReflectionObject, Root } from 'protobufjs'
 import JSON5 from 'json5'
+import YAML from 'yamljs'
 
 export enum BODY_OPTION {
   FORM_DATA = 'FORM_DATA',
@@ -50,6 +51,8 @@ export function convert(data: any, type: number) {
     return convertFromYapi(JSON5.parse(data))
   } else if (type === IMPORT_TYPE.PB3) {
     return convertFromPb3(data)
+  } else if (type === IMPORT_TYPE.SWAGGER_2_0) {
+    return convertFromSwagger(data)
   }
   return JSON5.parse(data)
 }
@@ -193,7 +196,7 @@ function getYapiType(type: string) {
     return 'String'
   }
   // when type is array and not define items type, the type value is ['array', 'null']
-  if(Array.isArray(type)) {
+  if (Array.isArray(type)) {
     return 'Array'
   }
   return type === 'integer' ? 'Number' : type.substring(0, 1).toUpperCase() + type.substring(1)
@@ -309,7 +312,7 @@ export function convertFromPb3(data) {
         const itfItem = {
           name: itfName,
           description: itf.comment || '',
-          url: `${res.package ? res.package + '.': ''}${name}/${itfName}`,
+          url: `${res.package ? res.package + '.' : ''}${name}/${itfName}`,
           method: 'post',
           properties: propertyList,
         }
@@ -338,4 +341,15 @@ function parseNested(json, services, types) {
       })
   }
   return { services, types }
+}
+export function convertFromSwagger(data: string | object) {
+  if (typeof data !== 'string') {
+    return data
+  }
+
+  try {
+    return JSON5.parse(data)
+  } catch {
+    return YAML.parse(data)
+  }
 }

@@ -1,6 +1,6 @@
 {
   "name": "rap-import-utils",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "utils for rap import",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -26,9 +26,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/yamljs": "^0.2.31",
+    "typescript": "^5.0.3"
+  },
   "dependencies": {
     "json5": "^2.2.0",
-    "protobufjs": "^6.11.2"
+    "protobufjs": "^6.11.2",
+    "yamljs": "^0.3.0"
   }
 }
