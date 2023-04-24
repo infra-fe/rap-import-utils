@@ -8,7 +8,7 @@
     "dev": "tsc -w",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-es.json",
     "publishAlpha": "npm version prerelease --preid=alpha && npm publish --tag alpha",
-    "publish": "npm version patch && npm publish",
+    "publishNormal": "npm version patch && npm publish",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
