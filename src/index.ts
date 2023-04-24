@@ -78,7 +78,7 @@ export function convertFromYapi(data) {
             rule,
             description: el.desc || el.description,
             value,
-            required: el.required === '1',
+            required: el.required === '1' || el.self_required === '1',
             type: getYapiType(el.type),
             parentId: el.parentId || -1,
           }
@@ -354,12 +354,13 @@ export function convertFromSwagger(data: string | object) {
 
 // add required property for json data
 function parseRequired(data) {
+  debugger
   let {required = [], properties = {}, type, items = {}} = data
   if(type === 'object') {
     for(let key in properties) {
       let item = properties[key]
       if (required.includes(key)) {
-        item.required = '1'
+        item.self_required = '1'
       }
       if(item.type === 'object' || item.type === 'array') {
         parseRequired(item)
