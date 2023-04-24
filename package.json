@@ -1,6 +1,6 @@
 {
   "name": "rap-import-utils",
-  "version": "0.0.5-alpha.0",
+  "version": "0.0.5",
   "description": "utils for rap import",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
