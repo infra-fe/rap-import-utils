@@ -10,5 +10,5 @@ fix convert YAPI type, when type is array and not define items type, the type va
 # 0.0.4
 add support convert yaml swagger 
 
-# 0.0.8
+# 0.0.9
 fix convert yapi same name required error
