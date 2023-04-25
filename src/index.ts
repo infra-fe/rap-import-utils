@@ -66,13 +66,9 @@ export function convertFromYapi(data) {
         const { req_query, req_headers, req_params, res_body, res_body_type, req_body_form, req_body_type, req_body_other } = itl
         let bodyOption = null
         const propertyList = []
-        const requiredSet = new Set()
         const insertProperty = (el, scope, pos = POS_OPTION.QUERY) => {
           const { name, required } = el
           const isNotRoot = name !== '__root__'
-          if (Array.isArray(required)) {
-            required.forEach(x => requiredSet.add(x))
-          }
           const { rule, value } = getYapiMock(el)
           const item = {
             id: id++,
@@ -82,7 +78,7 @@ export function convertFromYapi(data) {
             rule,
             description: el.desc || el.description,
             value,
-            required: el.required === '1' || requiredSet.has(el.name),
+            required: el.required === '1' || el.self_required === '1',
             type: getYapiType(el.type),
             parentId: el.parentId || -1,
           }
@@ -157,6 +153,7 @@ export function convertFromYapi(data) {
           } else if (req_body_other) {
             if (req_body_type === 'json') {
               const reqData = JSON5.parse(req_body_other)
+              parseRequired(reqData)
               reqData.name = '__root__'
               insertProperty(reqData, 'request', POS_OPTION.BODY)
             } else {
@@ -175,6 +172,7 @@ export function convertFromYapi(data) {
           }, 'response')
         } else if (res_body) {
           const resData = JSON5.parse(res_body)
+          parseRequired(resData)
           resData.name = '__root__'
           insertProperty(resData, 'response')
         }
@@ -351,5 +349,24 @@ export function convertFromSwagger(data: string | object) {
     return JSON5.parse(data)
   } catch {
     return YAML.parse(data)
+  }
+}
+
+// add required property for json data
+function parseRequired(data) {
+  let {required = [], properties = {}, type, items = {}} = data
+  if(type === 'object') {
+    for(let key in properties) {
+      let item = properties[key]
+      if (required.includes(key)) {
+        item.self_required = '1'
+      }
+      if(item.type === 'object' || item.type === 'array') {
+        parseRequired(item)
+      }
+    }
+  }
+  if(type === 'array') {
+    parseRequired(items)
   }
 }

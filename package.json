@@ -1,12 +1,14 @@
 {
   "name": "rap-import-utils",
-  "version": "0.0.4",
+  "version": "0.0.9",
   "description": "utils for rap import",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
   "scripts": {
     "dev": "tsc -w",
-    "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig-es.json",
+    "publishAlpha": "npm version prerelease --preid=alpha && npm publish --tag alpha",
+    "publishNormal": "npm version patch && npm publish",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
