@@ -354,7 +354,6 @@ export function convertFromSwagger(data: string | object) {
 
 // add required property for json data
 function parseRequired(data) {
-  debugger
   let {required = [], properties = {}, type, items = {}} = data
   if(type === 'object') {
     for(let key in properties) {
